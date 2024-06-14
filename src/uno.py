@@ -52,7 +52,8 @@ settings = {
             'actions': [Action.WILD, Action.DRAW4],
             'include_color': [Color.ANY],
         },
-    ]
+    ],
+    'default_hand_size': 7,
 }
 
 
@@ -421,7 +422,7 @@ class GameController:
     def __init__(self, settings):
         self.settings = settings
 
-        self.starting_hand_qty = 2 # TODO: move this to settings
+        self.starting_hand_qty = self.settings['default_hand_size']
 
         # create a new deck of cards
         self.make_game_deck()
