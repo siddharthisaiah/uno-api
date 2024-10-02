@@ -241,7 +241,7 @@ class Player:
         drawn_cards = self.game_controller.process_player_command(self.player_id, command_details)
         self.hand.extend(drawn_cards)
 
-        return True
+        return drawn_cards
 
 
     def discard(self, command_details):
@@ -250,6 +250,7 @@ class Player:
 
         # TODO: check if the card is available in hand and throw error if not
         card = command_details.get('card')
+        command_details['action'] = PlayerCommand.DISCARD
 
         if not self.card_in_hand(card):
             raise UnoInvalidCardException
@@ -439,6 +440,8 @@ class GameController:
         self.turn_tracker = TurnTracker(self.players)
 
         self.history = []
+
+        self.game_id = id(self)
 
     def add_player(self, player):
         self.turn_tracker.start_tracking_player(player)
